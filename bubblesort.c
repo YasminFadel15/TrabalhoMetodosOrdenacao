@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time>
 
 int* populaVetorMelhorCaso(int n) {
     int *v = malloc(sizeof(int) * n);
@@ -85,6 +86,9 @@ int* copiaVetor(int* v, int n) {
 
 int main() {
     int n = 1000;
+    
+    srand(time(0));
+    
     int* melhorCaso = populaVetorMelhorCaso(n);
     int* piorCaso = populaVetorPiorCaso(n);
     int* casoMedio = populaVetorCasoMedio(n);
