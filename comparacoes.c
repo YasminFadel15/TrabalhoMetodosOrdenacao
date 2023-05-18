@@ -140,13 +140,58 @@ int insertionsort(int* v, int s) {
     return c;
 }
 
+int merge(int* v, int inicio, int meio, int fim) {
+    int aux[fim - inicio + 1];
+    int i = inicio, j = meio + 1, k = 0;
+    int c = 0;
+    
+    c++;
+    while (i <= meio && j <= fim) { // Intercala
+        c++;
+        aux[k++] = v[i] <= v[j] ? v[i++] : v[j++];
+    }
+     
+    c++;
+    while (i <= meio){
+        c++;
+        aux[k++] = v[i++];  
+    } // Copia o resto do subvetor que não terminou
+    c++;
+    while (j <= fim) {
+        c++;
+        aux[k++] = v[j++];
+    } // Copia o resto do subvetor que não terminou
+    
+    c++;
+    for (i = inicio, k = 0; i <= fim; i++, k++) { // Copia de volta para o vetor original
+        c++;
+        v[i] = aux[k];
+    }
+    return c;
+}
+
+void _mergesort(int* v, int inicio, int fim) {
+    int meio = (inicio + fim) / 2;
+
+    if (inicio < fim) {
+        _mergesort(v, inicio, meio); // Dividir
+        _mergesort(v, meio + 1, fim);
+
+    merge(v, inicio, meio, fim); // Conquistar
+    }
+}
+
+int mergesort(int* v, int n) {
+    _mergesort(v, 0, n - 1);
+}
+
 int main() {
     int n = 1000;
   
     int* melhorCaso = populaVetorMelhorCaso(n);
     int* piorCaso = populaVetorPiorCaso(n);
     int* casoMedio = populaVetorCasoMedio(n);
-    
+    /*
     printf("-------------------------------\n");
     printf("Bubblesort:\n");
     printf("Melhor caso: %d\n", bubblesort(copiaVetor(melhorCaso, n), n));
@@ -166,5 +211,10 @@ int main() {
     printf("Insertionsort:\n");
     printf("Melhor caso: %d\n", insertionsort(copiaVetor(melhorCaso, n), n));
     printf("Pior caso: %d\n", insertionsort(copiaVetor(piorCaso, n), n));
-    printf("Caso medio: %d\n", insertionsort(copiaVetor(casoMedio, n), n));
+    printf("Caso medio: %d\n", insertionsort(copiaVetor(casoMedio, n), n)); */
+    printf("-------------------------------\n");
+    printf("Mergesort:\n");
+    printf("Melhor caso: %d\n", mergesort(copiaVetor(melhorCaso, n), n));
+    printf("Pior caso: %d\n", mergesort(copiaVetor(piorCaso, n), n));
+    printf("Caso medio: %d\n", mergesort(copiaVetor(casoMedio, n), n));
 }
